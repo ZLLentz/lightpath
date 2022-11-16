@@ -6,6 +6,8 @@ import pytest
 from lightpath.controller import LightController
 from lightpath.ui import LightApp
 
+GUI_TEST_TIMEOUT = 20
+
 
 @pytest.fixture(scope='function')
 def lightapp(lcls_client, qtbot):
@@ -14,6 +16,7 @@ def lightapp(lcls_client, qtbot):
     yield lightapp
 
 
+@pytest.mark.timeout(GUI_TEST_TIMEOUT)
 def test_app_buttons(lightapp: LightApp):
     # Create widgets
     assert len(lightapp.select_devices('MEC')) == 14
@@ -29,6 +32,7 @@ def test_lightpath_launch_script():
     assert find_executable('lightpath')
 
 
+@pytest.mark.timeout(GUI_TEST_TIMEOUT)
 def test_focus_on_device(lightapp: LightApp, monkeypatch):
     row = lightapp.rows[7][0]
     monkeypatch.setattr(lightapp.scroll,
@@ -46,6 +50,7 @@ def test_focus_on_device(lightapp: LightApp, monkeypatch):
     lightapp.focus_on_device('blah')
 
 
+@pytest.mark.timeout(GUI_TEST_TIMEOUT)
 def test_upstream_check(lightapp: LightApp, monkeypatch):
     assert len(lightapp.select_devices('TMO')) == 12
 
@@ -68,6 +73,7 @@ def test_upstream_check(lightapp: LightApp, monkeypatch):
             row[0].setHidden.assert_called_with(False)
 
 
+@pytest.mark.timeout(GUI_TEST_TIMEOUT)
 def test_filtering(lightapp: LightApp, monkeypatch):
     lightapp.destination_combo.setCurrentIndex(4)  # set current to MEC
     # Create mock functions
@@ -110,6 +116,7 @@ def test_filtering(lightapp: LightApp, monkeypatch):
             row[0].setHidden.assert_called_with(False)
 
 
+@pytest.mark.timeout(GUI_TEST_TIMEOUT)
 def test_typhos_display(lightapp: LightApp):
     # Smoke test the hide button without a detailed display
     lightapp.hide_detailed()

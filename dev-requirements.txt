@@ -6,4 +6,5 @@ sphinx
 sphinx_rtd_theme
 sphinx-argparse
 flake8
+pytest-timeout
 pytest-qt
